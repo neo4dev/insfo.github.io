@@ -26,7 +26,10 @@
 </head>
 <body class="slides animated noPreload">
   <script type="text/javascript">
-    Paddle.Checkout.open({ product: 737656 });
+    Paddle.Checkout.open({
+      product: 737656
+      email: ''
+     });
   </script>
   <script type="text/javascript">
      var query = window.location.search.substring(1);
@@ -44,6 +47,11 @@
               email=pair[1]
         }
      }
+
+     Paddle.Checkout.open({
+       product: product_id || 737656
+       email: email
+      });
      console.log(product_id,email);
 
 
