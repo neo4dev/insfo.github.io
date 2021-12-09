@@ -33,20 +33,25 @@
 </head>
 <body class="slides animated noPreload">
   <script type="text/javascript">
-     var query = window.location.search.substring(1);
-     var vars = query.split("&");
-     var email = ''
-
-     for (var i=0;i<vars.length;i++) {
-         var pair = vars[i].split("=");
-
-         switch(pair[0]) {
-           case 'email':
-              email=pair[1]
-        }
-     }
-     if (email) $crisp.push(["set", "user:email", [email]]);
-     $crisp.push(["do", "message:show", ["text", "Can I help?"]]);
+    function getQueryVariable(variable) {
+      var query = window.location.search.substring(1);
+      var vars = query.split("&");
+      for (var i=0;i<vars.length;i++) {
+        var pair = vars[i].split("=");
+        if(pair[0] == variable){return pair[1];}
+      }
+      return(false);
+    }
+    var params = {}
+    ['from','email','username','type'].forEach(item => {
+      params[item] = getQueryVariable(item)
+    });
+    if (params.email) $crisp.push(["set", "user:email", [params.email]]);
+    $crisp.push(["do", "message:show", ["text", `Hi ${params.email},`]]);
+    if (params.username) {
+      $crisp.push(["do", "message:show", ["text", `Do you need help exporting @${params.username}?`]]);
+    }
+    $crisp.push(["do", "message:show", ["text", `Ask anything, I'll answer within 24 hours.`]]);
 
   </script>
 <nav class="panel top">
