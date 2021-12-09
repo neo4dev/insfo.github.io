@@ -43,11 +43,15 @@
       return(false);
     }
     var params = {}
-    ['from','email','username','type'].forEach(item => {
+    var keywords = ['from','email','username','type']
+    keywords.forEach(item => {
+      console.log(item,params[item],getQueryVariable(item));
       params[item] = getQueryVariable(item)
     });
-    if (params.email) $crisp.push(["set", "user:email", [params.email]]);
-    $crisp.push(["do", "message:show", ["text", `Hi ${params.email},`]]);
+    if (params.email) {
+      $crisp.push(["set", "user:email", [params.email]]);
+      $crisp.push(["do", "message:show", ["text", `Hi ${params.email},`]]);
+    }
     if (params.username) {
       $crisp.push(["do", "message:show", ["text", `Do you need help exporting @${params.username}?`]]);
     }
